@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Conservation Mode Toggle
+Comment=Control battery conservation mode
+Exec=/home/mihajlo/githubrepos/linux_conservation_mode/build/linux/x64/release/bundle/conservation_mode_toggle
+Icon=battery
+Terminal=false
+Type=Application
+Categories=Utility;Settings;
