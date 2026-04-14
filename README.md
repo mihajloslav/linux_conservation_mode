@@ -1,62 +1,67 @@
 # Conservation Mode Toggle
 
-Flutter aplikacija za Linux koja omogućava upravljanje battery conservation modom na Lenovo laptopovima.
+A simple Flutter desktop application for Linux that toggles battery Conservation Mode on Lenovo IdeaPad Gaming 3 15ACH6.
 
-## Opis
+## Overview
 
-Ova aplikacija omogućava jednostavno uključivanje i isključivanje conservation moda koji ograničava punjenje baterije na 80% radi produženja njenog veka trajanja.
+This project provides a minimal, user-friendly interface for enabling or disabling Lenovo Conservation Mode.
 
-## Funkcionalnosti
+Conservation Mode helps extend battery lifespan by limiting maximum charge (commonly to around 80%).
 
-- Zeleni Cupertino toggle dugme (Apple stil)
-- Automatsko čitanje trenutnog statusa conservation moda
-- Uključivanje/isključivanje conservation moda
-- Refresh dugme za ažuriranje statusa
-- Koristi `pkexec` za root privilegije (ne zahteva direktan sudo)
+## Features
 
-## Zahtevi
+- Clean, simple UI with an iOS-style green Cupertino toggle
+- Reads current conservation mode state from sysfs
+- Switches between mode values `0` and `1`
+- Manual refresh button for state sync
+- Uses `pkexec` to request elevated privileges when writing system values
 
-- Flutter SDK
-- Linux (testiran na Ubuntu/Debian baziranim distribucijama)
-- Lenovo laptop sa podrškom za conservation mode
-- `pkexec` (obično već instaliran kao deo PolicyKit)
+## Device and Platform
 
-## Instalacija
+- Target device: Lenovo IdeaPad Gaming 3 15ACH6
+- Platform: Linux
+- UI framework: Flutter (Linux desktop)
 
-1. Klonirati repozitorijum:
-```bash
-git clone <repo-url>
-cd linux_conservation_mode
-```
+## How It Works
 
-2. Instalirajte zavisnosti:
-```bash
-flutter pub get
-```
+The app reads and writes the following sysfs node:
 
-3. Pokrenite aplikaciju:
-```bash
-flutter run -d linux
-```
-
-## Kako radi
-
-Aplikacija čita i piše u:
-```
+```text
 /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
 ```
 
-- `1` = conservation mode uključen (maksimalno punjenje 80%)
-- `0` = conservation mode isključen (punjenje do 100%)
+- `1` = Conservation Mode enabled
+- `0` = Conservation Mode disabled
 
-## Napomena o privilegijama
+## Requirements
 
-Aplikacija koristi `pkexec` umesto direktnog `sudo` komande. Kada kliknete na toggle, pojaviće se dijalog za autentifikaciju koji traži vašu lozinku.
+- Flutter SDK installed and configured for Linux desktop
+- Linux environment with `ideapad_acpi` conservation mode support
+- `pkexec` available (usually provided by PolicyKit)
 
-## Build za produkciju
+## Run in Development
+
+```bash
+flutter pub get
+flutter run -d linux
+```
+
+## Build Release
 
 ```bash
 flutter build linux --release
 ```
 
-Izvršni fajl će biti u: `build/linux/x64/release/bundle/`
+Release bundle output:
+
+```text
+build/linux/x64/release/bundle/
+```
+
+## Security and Permissions
+
+Writing to sysfs requires root privileges. The app uses `pkexec` so the user is prompted for authentication only when needed.
+
+## Disclaimer
+
+This is a simple utility created specifically for Lenovo IdeaPad Gaming 3 15ACH6 on Linux. Behavior may differ on other Lenovo models or kernel/driver versions.

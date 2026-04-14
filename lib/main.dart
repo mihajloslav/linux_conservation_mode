@@ -98,7 +98,7 @@ class _ConservationModePageState extends State<ConservationModePage> {
           _isConservationModeEnabled = newValue;
           _isLoading = false;
           _statusMessage =
-              'Conservation mode ${newValue ? "enabled" : "disabled"}';
+              'Current mode: ${_isConservationModeEnabled ? "ON" : "OFF"}';
         });
       } else {
         setState(() {
@@ -153,7 +153,7 @@ class _ConservationModePageState extends State<ConservationModePage> {
                 scale: 1.5,
                 child: CupertinoSwitch(
                   value: _isConservationModeEnabled,
-                  activeColor: CupertinoColors.systemGreen,
+                  activeTrackColor: CupertinoColors.systemGreen,
                   onChanged: _isLoading ? null : _toggleConservationMode,
                 ),
               ),
